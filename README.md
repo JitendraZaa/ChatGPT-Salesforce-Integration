@@ -10,6 +10,9 @@
 ## Idea 
 1. Add chatbot on public page and see how it works
 
+## Limitations
+1. Whole history of conversation not sent. Code can be modified to send whole history of conversation for better experience.
+
 ## Test Anonynous Code
 
 ```

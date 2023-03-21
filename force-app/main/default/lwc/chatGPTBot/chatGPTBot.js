@@ -19,48 +19,51 @@
  * @author        Jitendra Zaa
  * @email           jitendra.zaa+30@gmail.com
  * @description   TBD
- */
+ */ 
 import { LightningElement, track } from 'lwc';
 import generateResponse from '@salesforce/apex/ChatGPTService.generateResponse';
 
 export default class ChatGPTBot extends LightningElement {
-    conversation = [];
-    messageInput = 'what is your name ?';
-    userMessage = 'what is your name ?' ;
+    @track conversation = [];
+    @track messageInput = '';
 
-    handleMessageChange(event) {
+    handleChange(event) {
         if (event && event.target) {
             this.messageInput = event.target.value;
-            //console.log(this.messageInput);
         }
     }
 
-     handleSendMessage() {
-        console.log(this.messageInput);
+    async handleSendMessage() {
         if (this.messageInput && this.messageInput.trim() !== '') {
-            this.appendMessage('User', this.messageInput);
-            this.conversation.push({ role: 'user', text: this.messageInput });
+            const userMessage = {
+                id: 'user-' + this.conversation.length,
+                role: 'user',
+                text: this.messageInput,
+                containerClass: 'slds-chat-message slds-chat-message_outbound user-message',
+                textClass: 'slds-chat-message__text slds-chat-message__text_outbound',
+                isBot : false
+            };
+            this.conversation = [...this.conversation, userMessage];
             this.messageInput = '';
- 
-            //console.log('Going to try make server call'); 
-            generateResponse({ messageText: this.conversation[this.conversation.length - 1]?.text })
-                .then(result => {
-                    this.conversation.push({ role: 'assistant', text: result });
-                    this.appendMessage('ChatGPT', result);
-                })
-                .catch(error => {
-                    console.error('Error generating ChatGPT response:', error);
-                });
-  
+
+            try {
+                const chatGPTResponse = await generateResponse({ messageText: this.conversation[this.conversation.length - 1]?.text });
+                if (chatGPTResponse && chatGPTResponse.trim() !== '') {
+                    const assistantMessage = {
+                        id: 'assistant-' + this.conversation.length,
+                        role: 'assistant',
+                        text: chatGPTResponse,
+                        containerClass: 'slds-chat-message slds-chat-message_inbound',
+                        textClass: 'slds-chat-message__text slds-chat-message__text_inbound',
+                        isBot : true
+                    };
+                    this.conversation = [...this.conversation, assistantMessage];
+                } else {
+                    console.error('Error generating ChatGPT response: Empty response');
+                }
+            } catch (error) {
+                console.error('Error generating ChatGPT response:', error);
+            }
         }
     }
-
-    appendMessage(sender, message) {
-        const chatContent = this.template.querySelector('.chat-content');
-        const messageElement = document.createElement('p');
-        messageElement.textContent = `${sender}: ${message}`;
-        messageElement.className = sender === 'User' ? 'user-message' : 'bot-message';
-        chatContent.appendChild(messageElement);
-    }
-
 }

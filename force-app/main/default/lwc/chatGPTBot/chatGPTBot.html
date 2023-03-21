@@ -1,23 +1,30 @@
-<template>
-    <lightning-card title="ChatGPT Bot" icon-name="custom:custom19">
-        <div class="chat-container">
-            <div class="chat-content" lwc:dom="manual"></div>
-            <div class="input-container">
-                <lightning-input
-                    class="chat-input"
-                    type="text"
-                    label="Your Message"
-                    value={userMessage}
-                    onchange={handleMessageChange}
-                ></lightning-input>
-                <lightning-button
-                    variant="brand"
-                    label="Send"
-                    title="Send"
-                    onclick={handleSendMessage}
-                    disabled={isSendButtonDisabled}
-                ></lightning-button>
+ <template>
+    <div class="slds-box slds-theme_default">
+        <div class="slds-chat">
+            <ul class="slds-chat-list">
+                <template for:each={conversation} for:item="message">
+                    <li key={message.id} class="slds-chat-listitem slds-m-bottom_small">
+                        <div class={message.containerClass}>
+                            <div class="slds-chat-message__text">
+                                <template lwc:if={message.isBot}>
+                                    <span class={message.textClass}>GPT : {message.text}</span>
+                                </template>
+                                <template lwc:else>
+                                    <span class={message.textClass}>User : {message.text}</span>
+                                </template> 
+                            </div>
+                        </div>
+                    </li>
+                </template>
+            </ul>
+        </div>
+        <div class="slds-grid slds-grid_align-spread slds-p-top_medium">
+            <div class="slds-col slds-size_10-of-12">
+                <lightning-input type="text" label="Type your message" value={messageInput} onchange={handleChange}></lightning-input>
+            </div>
+            <div class="slds-col slds-size_2-of-12 slds-text-align_right slds-align-middle slds-p-top_medium">
+                <lightning-button label="Send" onclick={handleSendMessage} variant="brand"></lightning-button>
             </div>
         </div>
-    </lightning-card>
+    </div>
 </template>
