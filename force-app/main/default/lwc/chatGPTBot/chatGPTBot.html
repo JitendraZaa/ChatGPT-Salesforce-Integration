@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="ChatGPT Bot" icon-name="custom:custom19">
+        <div class="chat-container">
+            <div class="chat-content" lwc:dom="manual"></div>
+            <div class="input-container">
+                <lightning-input
+                    class="chat-input"
+                    type="text"
+                    label="Your Message"
+                    value={userMessage}
+                    onchange={handleMessageChange}
+                ></lightning-input>
+                <lightning-button
+                    variant="brand"
+                    label="Send"
+                    title="Send"
+                    onclick={handleSendMessage}
+                    disabled={isSendButtonDisabled}
+                ></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
