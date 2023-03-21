@@ -4,5 +4,9 @@
 		<members>Open_AI_URL</members>
 		<name>RemoteSiteSetting</name>
 	</types>
+	<types>
+		<members>ConsoleToolkit</members>
+		<name>StaticResource</name>
+	</types>
 	<version>55.0</version>
 </Package>

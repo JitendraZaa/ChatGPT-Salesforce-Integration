@@ -20,7 +20,7 @@
  * @email           jitendra.zaa+30@gmail.com
  * @description   TBD
  */ 
-import { LightningElement, track } from 'lwc';
+import { LightningElement, track, api } from 'lwc';
 import generateResponse from '@salesforce/apex/ChatGPTService.generateResponse';
 
 export default class ChatGPTBot extends LightningElement {
@@ -66,4 +66,16 @@ export default class ChatGPTBot extends LightningElement {
             }
         }
     }
+
+    @api
+    async generateChatGPTResponse(prompt) {
+        try {
+            const response = await generateResponse({ prompt: prompt });
+            return response;
+        } catch (error) {
+            console.error('Error: Unable to generate response from ChatGPT.', error);
+            return 'Error: Unable to generate response from ChatGPT.';
+        }
+    }
+    
 }

@@ -5,6 +5,7 @@
 1. Org 29 has chat bot enabled. Community Link - https://jit29-dev-ed.my.site.com/UrsaMajor/s/
 1. Presence status - `Available - Chat` 
 1. Get API key from https://api.openai.com 
+1. Copy SF Console Integration toolkit from URL `/support/console/57.0/integration.js`
 
 
 ## Idea 

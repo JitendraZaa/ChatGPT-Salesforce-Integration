@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata" fqn="chatGPTBot">
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>56.0</apiVersion>
     <isExposed>true</isExposed>
     <targets>
@@ -10,6 +10,5 @@
         <target>lightning__Tab</target>
         <target>lightningCommunity__Default</target>
         <target>lightningCommunity__Page</target>
-        <target>lightningSnapin__PreChat</target>
     </targets>
 </LightningComponentBundle>
