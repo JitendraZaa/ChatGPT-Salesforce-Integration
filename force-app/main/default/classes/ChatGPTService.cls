@@ -21,9 +21,12 @@
  * @description   Apex class to interact with chat GPT Web Service
  */ 
 public with sharing class ChatGPTService {
-    private static final String API_KEY = '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'; // Replace with your actual API key
-    private static final String ENDPOINT_URL = 'https://api.openai.com/v1/engines/davinci-codex/completions';
+    private static final String API_KEY = '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'; // Replace with your actual API key
+    private static final String ENDPOINT_URL = 'https://api.openai.com/v1/chat/completions';
 
+    /**
+     * @description Method to generate response from ChatGPT
+     */
     @AuraEnabled(cacheable=false)
     public static String generateResponse(String messageText) {
         HttpRequest req = new HttpRequest();
@@ -36,13 +39,22 @@ public with sharing class ChatGPTService {
         String prompt = 'You are a helpful assistant.\nUser: ' + messageText + '\nAssistant:';
         System.debug(prompt); 
 
+        Map<String, Object> PromptBody = new Map<String, Object>();
+        PromptBody.put('role','user');
+        PromptBody.put('content',messageText);
+
+        List<Object> lstPrompts = new List<Object>();
+        lstPrompts.add(PromptBody);
+
         Map<String, Object> requestBody = new Map<String, Object>();
-        requestBody.put('prompt', prompt);
-        requestBody.put('max_tokens', 50);
-        requestBody.put('n', 1);
-        requestBody.put('stop', new List<String>{'\n'});
+        requestBody.put('messages', lstPrompts);
+        requestBody.put('model', 'gpt-3.5-turbo');
+        //requestBody.put('max_tokens', 50);
+        //requestBody.put('n', 1);
+        //requestBody.put('stop', new List<String>{'\n'});
 
         req.setBody(JSON.serialize(requestBody));
+        System.debug('Request Body: ' + req.getBody());
 
         Http http = new Http();
         HttpResponse res = http.send(req);
@@ -53,8 +65,12 @@ public with sharing class ChatGPTService {
             List<Object> choices = (List<Object>)responseBody.get('choices');
             if (choices.size() > 0) {
                 Map<String, Object> choice = (Map<String, Object>)choices.get(0);
-                String responseText = (String)choice.get('text');
+                Map<String,Object> mpMessages = (Map<String,Object>)choice.get('message');
+
+                String responseText = (String)mpMessages.get('content');
+
                 responseText = responseText != null ? responseText.trim() : '';
+                //system.debug('Response Text: ' + responseText);
                 return responseText;
             }
         } else {
@@ -65,5 +81,8 @@ public with sharing class ChatGPTService {
         return '';
     }
 
+    /**
+     * @description Custom exception class
+     */
     public class ChatGPTException extends Exception {}
 } 
