@@ -21,7 +21,7 @@
  * @description   Apex class to interact with chat GPT Web Service
  */ 
 public with sharing class ChatGPTService {
-    private static final String API_KEY = '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'; // Replace with your actual API key
+    private static final String API_KEY = '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'; // Replace with your actual API key
     private static final String ENDPOINT_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
