@@ -1,21 +1,17 @@
-# Salesforce chat integration with ChatGPT
+# chatGPT Integration with Salesforce
 
+## Initial Setup
+1. Update custom label `ChatGPTAPIKey` with [your openAI API key](https://platform.openai.com/account/api-keys).
+2. To use chat, add LWC `ChatGPTBot` on your lightning page.
+3. To detect sentiment of customer for support ticket, add LWC `chatGPTIntelligence` on case record page. If you want to fetch any child record then update variable `childRelationships` in `RecordFieldsFetcher` class. 
 
-## Notes
-1. Org 29 has chat bot enabled. Community Link - https://jit29-dev-ed.my.site.com/UrsaMajor/s/
-1. Presence status - `Available - Chat` 
-1. Get API key from https://api.openai.com 
-1. Copy SF Console Integration toolkit from URL `/support/console/57.0/integration.js`
-1. Customize Prechat form to trasnfer JSON to main chat page - `https://developer.salesforce.com/docs/component-library/bundle/lightningsnapin-base-prechat/documentation`
-1. LWC should have target as `lightningSnapin__PreChat` so that it can appear as pre chat form.
+## Youtube video on how to use it 
 
+[![chatGPT Integration with Salesforce by Jitendra Zaa](https://img.youtube.com/vi/cdWAh2okH-w/0.jpg)](https://www.youtube.com/watch?v=cdWAh2okH-w "chatGPT Integration with Salesforce by Jitendra Zaa")
 
-## Idea 
-1. Add chatbot on public page and see how it works
-
-## Limitations
-1. Whole history of conversation not sent. Code can be modified to send whole history of conversation for better experience.
-
+## Resources
+1. [postman chatGPT collection](https://quickstarts.postman.com/guide/chatgpt/index.html?index=..%2F..index)
+  
 ## Test Anonynous Code
 
 ```
@@ -23,3 +19,6 @@ String prompt = 'Till what date latest information your model has ?';
 String outcome = ChatGPTService.generateResponse(prompt);
 System.debug(outcome);
 ```
+
+## Known Limitations
+1. Whole history of conversation not sent. Code can be modified to send whole history of conversation for better experience.

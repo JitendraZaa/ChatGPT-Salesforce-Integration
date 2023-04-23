@@ -21,7 +21,7 @@
  * @description   Apex class to interact with chat GPT Web Service
  */ 
 public with sharing class ChatGPTService {
-    private static final String API_KEY = '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'; // Replace with your actual API key
+    private static final String API_KEY = System.label.chatGPTAPIKey; // Replace with your actual API key
     private static final String ENDPOINT_URL = 'https://api.openai.com/v1/chat/completions';
 
     /**
@@ -32,6 +32,7 @@ public with sharing class ChatGPTService {
         HttpRequest req = new HttpRequest();
         req.setEndpoint(ENDPOINT_URL);
         req.setMethod('POST');
+        req.setTimeout(1000*120);
         req.setHeader('Content-Type', 'application/json');
         req.setHeader('Authorization', 'Bearer ' + API_KEY); // Add the API key to the request header
 
@@ -85,4 +86,4 @@ public with sharing class ChatGPTService {
      * @description Custom exception class
      */
     public class ChatGPTException extends Exception {}
-} 
+}

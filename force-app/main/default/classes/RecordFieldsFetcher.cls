@@ -18,7 +18,7 @@
  * @date          April 2023
  * @author        Jitendra Zaa
  * @email         jitendra.zaa@ibm.com | jitendra.zaa+30@gmail.com
- * @description   This class is used to fetch all non-blank fields of a record.
+ * @description   This class is used to fetch all non-blank fields of a record and ask chat GPT to summarize.
  */
 
  public with sharing class RecordFieldsFetcher {
